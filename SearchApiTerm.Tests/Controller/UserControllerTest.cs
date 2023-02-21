@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using NUnit.Framework;
 using SearchTerm.API.Controllers;
 using SearchTerm.API.Entities;
 using SearchTerm.API.Requests.Model;
@@ -33,8 +32,8 @@ namespace SearchApiTerm.Tests.Controller
 
             _userRequest = new CreateUserRequest
             {
-                FirstName = "Test Firstname",
-                LastName = "Test Lastname",
+                First_Name = "Test Firstname",
+                Last_Name = "Test Lastname",
                 Email = "First.Last@email.com",
                 Gender = "Male"
             };
@@ -66,8 +65,8 @@ namespace SearchApiTerm.Tests.Controller
 
             _userRequest = new CreateUserRequest
             {
-                FirstName = "",
-                LastName = "Test1 Lastname",
+                First_Name = "",
+                Last_Name = "Test1 Lastname",
                 Email = "First1.Last@email.com",
                 Gender = "Male"
             };
@@ -77,7 +76,7 @@ namespace SearchApiTerm.Tests.Controller
             //Act
             var response = await _controller.CreateAsync(_userRequest);
 
-            //Assertnew System.Threading.Tasks.SystemThreadingTasks_FutureDebugView<Microsoft.AspNetCore.Mvc.IActionResult>(response).Status
+            //Assert
             Assert.IsTrue(_controller.ViewData.ModelState.Count ==1 , "First Name is required");
         }
 
@@ -89,8 +88,8 @@ namespace SearchApiTerm.Tests.Controller
 
             _userRequest = new CreateUserRequest
             {
-                FirstName = "Antony",
-                LastName = "James",
+                First_Name = "Antony",
+                Last_Name = "James",
                 Email = "ant.jam@email.com",
                 Gender = "Male"
             };

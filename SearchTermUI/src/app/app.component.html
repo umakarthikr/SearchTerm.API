@@ -1,0 +1,40 @@
+<style>
+table, td, th{
+  border: 1px solid black;
+}
+
+table
+{
+ border-collapse : collapse;
+ width : 90%
+}
+
+th
+{
+  height : 50px;
+}
+
+</style>
+
+<h2>Matching Users</h2>
+
+  <input #searchString/>
+  <button class="button" (click)="searchUser(searchString.value)">Search</button>
+<br /><br />
+  <table>
+    <tr>
+      <th>Id</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Gender</th>
+    </tr>
+
+    <tr *ngFor="let user of lstUsers">
+      <td>{{user.id}}</td>
+      <td>{{user.firstName}}</td>
+      <td>{{user.lastName}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.gender}}</td>
+    </tr>
+  </table>

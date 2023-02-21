@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using SearchTerm.API.Entities.Context;
+using SearchTerm.API.Helpers;
 using SearchTerm.API.Repository;
 using SearchTerm.API.Requests.Model;
 using SearchTerm.API.Requests.Validators;
@@ -22,7 +23,18 @@ builder.Services.AddMvc();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddScoped<IValidator<CreateUserRequest>, CreateUserRequestValidator>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200");
+    });
+});
+
 var app = builder.Build();
+
+app.UseMiddleware<GlobalErrorHandler>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -31,6 +43,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors();
 
 app.UseHttpsRedirection();
 

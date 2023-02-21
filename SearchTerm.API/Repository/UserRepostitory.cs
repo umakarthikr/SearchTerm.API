@@ -27,9 +27,7 @@ namespace SearchTerm.API.Repository
         public async Task<User> CreateAsync(User user)
         {
             if(_dbContext.Users.Any(x => x.Email.ToLower()== user.Email.ToLower()))
-            {
-                throw new AppException("User with the email '" + user.Email + "' already exists");
-            }
+                throw new AppException("User with the same email already exists");
 
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
@@ -51,10 +49,10 @@ namespace SearchTerm.API.Repository
         {
             string searchValue = searchString.ToLower();
 
-            var users = _dbContext.Users.Where(u => u.FirstName.ToLower().Contains(searchValue) ||
+            var users = _dbContext.Users.Where(
+                               u => u.FirstName.ToLower().Contains(searchValue) ||
                                u.LastName.ToLower().Contains(searchValue) ||
-                               u.Email.ToLower().Contains(searchValue) ||
-                               u.Gender.ToLower().Contains(searchValue));
+                               u.Email.ToLower().Contains(searchValue));
 
             return await users.ToListAsync();
         }

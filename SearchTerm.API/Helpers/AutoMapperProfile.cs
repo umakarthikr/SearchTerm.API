@@ -8,7 +8,9 @@ namespace SearchTerm.API.Helpers
     {
         public AutoMapperProfile() 
         {
-            CreateMap<CreateUserRequest, User>();
+            CreateMap<CreateUserRequest, User>()
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.First_Name))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Last_Name));
         }
     }
 }

@@ -6,12 +6,12 @@ namespace SearchTerm.API.Requests.Validators
     public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
     {
         public CreateUserRequestValidator() {
-            RuleFor(r => r.FirstName)
+            RuleFor(r => r.First_Name)
               .NotEmpty()
               .NotNull()
               .WithMessage("First name is required");
 
-            RuleFor(r => r.LastName)
+            RuleFor(r => r.Last_Name)
               .NotEmpty()
               .NotNull()
               .WithMessage("Last name is required");

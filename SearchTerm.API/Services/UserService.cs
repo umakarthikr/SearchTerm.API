@@ -24,11 +24,26 @@ namespace SearchTerm.API.Services
 
         public async Task<User> CreateAsync(User user)
         {
+            if (string.IsNullOrEmpty(user.FirstName))
+                throw new AppException("First Name is required");
+
+            if (string.IsNullOrEmpty(user.LastName))
+                throw new AppException("Last Name is required");
+
+            if (string.IsNullOrEmpty(user.Email))
+                throw new AppException("Email is required");
+
+            if (string.IsNullOrEmpty(user.Gender))
+                throw new AppException("Gender is required");
+
             return await _userRepository.CreateAsync(user);
         }
 
         public async Task<User> GetUserAsync(int id)
         {
+            if(id < 1)
+                throw new AppException("Invalid Id");
+
             return await _userRepository.GetUserAsync(id);
         }
 
