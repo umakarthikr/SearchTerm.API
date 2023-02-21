@@ -5,6 +5,9 @@ SearchTerm.Api
 SearchTerm.Tests
 SearchTerm.UI
 
+Pre-requirement
+Node.js must be installed in the machine and can be downloaded from here https://nodejs.org/en/
+
 #SearchTerm.Api
 This Asp.net Core rest api project with .Net framework .Net 6.0 implemets the asynchronous api end points actions for CreateUsers and GetUsers based on the search string passed.The architecture is MVC with DI Design pattern/Abstract Fatory with EF core inmemory Database.
 
