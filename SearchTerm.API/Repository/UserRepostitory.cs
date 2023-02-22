@@ -1,12 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using SearchTerm.API.Entities;
 using SearchTerm.API.Entities.Context;
 using SearchTerm.API.Helpers;
-using SearchTerm.API.Requests.Model;
-using System.Net.WebSockets;
 
 namespace SearchTerm.API.Repository
 {
@@ -26,35 +21,44 @@ namespace SearchTerm.API.Repository
         }
         public async Task<User> CreateAsync(User user)
         {
-            if(_dbContext.Users.Any(x => x.Email.ToLower()== user.Email.ToLower()))
-                throw new AppException("User with the same email already exists");
+            using (var context = new UserEFCoreInMemoryDBContext())
+            {
+                if (_dbContext.Users.Any(x => x.Email.ToLower() == user.Email.ToLower()))
+                    throw new AppException("User with the same email already exists");
 
-            _dbContext.Users.Add(user);
-            await _dbContext.SaveChangesAsync();
+                _dbContext.Users.Add(user);
+                await _dbContext.SaveChangesAsync();
 
-            return user; 
+                return user;
+            }
         }
 
         public async Task<User> GetUserAsync(int id)
         {
-            var user = await _dbContext.Users.FindAsync(id);
+            using (var context = new UserEFCoreInMemoryDBContext())
+            { 
+                var user = await _dbContext.Users.FindAsync(id);
 
-            if(user == null)
-                throw new AppException("User not found");
+                if (user == null)
+                    throw new AppException("User not found");
 
-            return user;
+                return user;
+            }
         }
 
         public async Task<List<User>> GetUsersAsync(string searchString)
         {
-            string searchValue = searchString.ToLower();
+            using (var context = new UserEFCoreInMemoryDBContext())
+            {
+                string searchValue = searchString.ToLower();
 
-            var users = _dbContext.Users.Where(
-                               u => u.FirstName.ToLower().Contains(searchValue) ||
-                               u.LastName.ToLower().Contains(searchValue) ||
-                               u.Email.ToLower().Contains(searchValue));
+                var users = _dbContext.Users.Where(
+                                   u => u.FirstName.ToLower().Contains(searchValue) ||
+                                   u.LastName.ToLower().Contains(searchValue) ||
+                                   u.Email.ToLower().Contains(searchValue));
 
-            return await users.ToListAsync();
+                return await users.ToListAsync();
+            }
         }
     }
  }
