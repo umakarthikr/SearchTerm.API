@@ -50,6 +50,7 @@ namespace SearchApiTerm.Tests.Repository
             {
                 //Arrange
                 UserRepository _userRepository = new UserRepository(context);
+                context.Users = null;
                 context.Users.Add(new User { Id = 1, FirstName = "James", LastName = "Arnold", Email = "j.a@email.com", Gender = "Male" });
                 context.SaveChanges();
 
@@ -74,6 +75,7 @@ namespace SearchApiTerm.Tests.Repository
                 //Arrange
                 Exception caughtException = null;
                 UserRepository _userRepository = new UserRepository(context);
+                 context.Users = null;
                 context.Users.Add(new User { Id = 1, FirstName = "James", LastName = "Arnold", Email = "new@new.com", Gender = "Male" });
                 context.SaveChanges();
 
